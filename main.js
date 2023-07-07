@@ -1,9 +1,9 @@
-
+console.log("I am working fine ")
 let APP_Id = "6680d260aa644362be0e130c8db3e305";
 
 let token = null;
 
-let uid = String(Math.floor(Math.random()*10000));
+let uid = String ( Math.floor(Math.random()*10000) );
 
 let client ;
 let channel;
@@ -23,14 +23,34 @@ const servers = {
 };
 
 //  function ask for the video camera connection
+
+
 let init = async () => {
+       client = await AgoraRTM.createInstance(APP_Id);
+       await client.login({uid,token});
+
+       channel = client.createChannel('main');
+       await channel.join();
+ 
+      //  channel.on("peer-online",handleUserJoined);
+      channel.on('MemberJoined',handleUserJoined)
+      
+
   localStream = await navigator.mediaDevices.getUserMedia({
     video: true,
     audio: false,
   });
+
   document.getElementById("user-1").srcObject = localStream;
   createOffer();
+
+
 };
+
+let handleUserJoined = async (MemberId) => {
+  console.log('A new user joined the channel:', MemberId)
+}
+
 
 // now create an offer by setting peer to peer connection
 
@@ -53,13 +73,13 @@ let createOffer = async () => {
 
   peerConnection.onicecandidate = async (event) => {
     if(event.candidate){
-        console.log(`New Ice candidate`,event.candidate);
+        // console.log(`New Ice candidate`,event.candidate);
     }
   }
 
   let offer = await peerConnection.createOffer(); 
   await peerConnection.setLocalDescription(offer);
-  console.log("Offer:", offer);
+  // console.log("Offer:", offer);
 };
 
 init();
