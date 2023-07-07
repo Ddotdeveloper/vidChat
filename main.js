@@ -31,7 +31,7 @@ let createOffer = async () => {
   document.getElementById("user-2").srcObject = remoteStream;
 
   // add the elments of the track from the local stream
-  localStream.getTrack().forEach((track) => {
+  localStream.getTracks().forEach((track) => {
     peerConnection.addTrack(track, localStream);
   });
 
@@ -41,7 +41,13 @@ let createOffer = async () => {
     });
   };
 
-  let offer = await peerConnection.createOffer(); // this  will create and offer
+  peerConnection.onicecandidate = async (event) => {
+    if(event.candidate){
+        console.log(`New Ice candidate`,event.candidate);
+    }
+  }
+
+  let offer = await peerConnection.createOffer(); 
   await peerConnection.setLocalDescription(offer);
   console.log("Offer:", offer);
 };
