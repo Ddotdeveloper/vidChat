@@ -1,11 +1,12 @@
 body{
-    background-color: whitesmoke;
+    background-color: #363739;
     color: #fff;
 }
 
 #form-container{
     width: 90%;
     max-width: 600px;
+    /* padding: 5px; */
     border-radius: 10px;
     background-color: #262625;
     position: fixed;
@@ -27,7 +28,8 @@ body{
   }
 
   #form__content__wrapper{
-    padding: 20px;
+    padding: 25px;
+    /* border-radius: 20px; */
 }
 
 input {
@@ -46,5 +48,6 @@ input {
  
   input[type='submit'] {
     background-color:cornflowerblue;
+    font-weight: bolder;
  
   }
