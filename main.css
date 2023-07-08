@@ -18,3 +18,7 @@
     height: 300px;;
     /* object-fit: cover; */
 }
+
+#user-2{
+    display: none;
+}
