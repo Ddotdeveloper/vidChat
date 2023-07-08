@@ -49,7 +49,7 @@ let init = async () => {
 
   localStream = await navigator.mediaDevices.getUserMedia({
     video: true,
-    audio: false,
+    audio: true,
   });
 
   document.getElementById("user-1").srcObject = localStream;
@@ -165,6 +165,34 @@ let leaveChannel = async()=>{
 }
 
 
+let toggleCamera = async () => {
+  let videoTrack = localStream.getTracks().find(track => track.kind === 'video')
+
+  if(videoTrack.enabled){
+      videoTrack.enabled = false
+      document.getElementById('camera-btn').style.backgroundColor = 'rgb(255, 80, 80)'
+  }else{
+      videoTrack.enabled = true
+      document.getElementById('camera-btn').style.backgroundColor = 'rgb(0, 123, 255, 0.916)'
+  }
+}
+
+
+let toggleMic = async () => {
+  let audioTrack = localStream.getTracks().find(track => track.kind === 'audio')
+
+  if(audioTrack.enabled){
+      audioTrack.enabled = false
+      document.getElementById('mic-btn').style.backgroundColor = 'rgb(255, 80, 80)'
+  }else{
+      audioTrack.enabled = true
+      document.getElementById('mic-btn').style.backgroundColor = 'rgba(0, 123, 255, 0.916)'
+  }
+}
+
+document.getElementById('camera-btn').addEventListener('click', toggleCamera)
+
+document.getElementById('mic-btn').addEventListener('click', toggleMic)
 window.addEventListener('beforeunload', leaveChannel)
 
 init();
